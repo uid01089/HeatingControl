@@ -1,0 +1,254 @@
+{
+  "Sun": [
+    {
+      "time": "05:00",
+      "temperature": 23
+    },
+    {
+      "time": "08:00",
+      "temperature": 23
+    },
+    {
+      "time": "15:00",
+      "temperature": 23
+    },
+    {
+      "time": "21:00",
+      "temperature": 23
+    }
+  ],
+  "Mon": [
+    {
+      "time": "03:00",
+      "temperature": 23
+    },
+    {
+      "time": "06:00",
+      "temperature": 23
+    },
+    {
+      "time": "15:00",
+      "temperature": 23
+    },
+    {
+      "time": "21:00",
+      "temperature": 23
+    }
+  ],
+  "Tue": [
+    {
+      "time": "03:00",
+      "temperature": 23
+    },
+    {
+      "time": "06:00",
+      "temperature": 23
+    },
+    {
+      "time": "15:00",
+      "temperature": 23
+    },
+    {
+      "time": "21:00",
+      "temperature": 23
+    }
+  ],
+  "Wed": [
+    {
+      "time": "03:00",
+      "temperature": 23
+    },
+    {
+      "time": "06:00",
+      "temperature": 23
+    },
+    {
+      "time": "15:00",
+      "temperature": 23
+    },
+    {
+      "time": "21:00",
+      "temperature": 23
+    }
+  ],
+  "Thu": [
+    {
+      "time": "03:00",
+      "temperature": 23
+    },
+    {
+      "time": "06:00",
+      "temperature": 23
+    },
+    {
+      "time": "15:00",
+      "temperature": 23
+    },
+    {
+      "time": "21:00",
+      "temperature": 23
+    }
+  ],
+  "Fri": [
+    {
+      "time": "03:00",
+      "temperature": 23
+    },
+    {
+      "time": "06:00",
+      "temperature": 23
+    },
+    {
+      "time": "15:00",
+      "temperature": 23
+    },
+    {
+      "time": "21:00",
+      "temperature": 23
+    }
+  ],
+  "Sat": [
+    {
+      "time": "06:00",
+      "temperature": 23
+    },
+    {
+      "time": "08:00",
+      "temperature": 23
+    },
+    {
+      "time": "15:00",
+      "temperature": 23
+    },
+    {
+      "time": "21:00",
+      "temperature": 23
+    }
+  ],
+  "Sun": [
+    {
+      "time": "06:00",
+      "temperature": 23
+    },
+    {
+      "time": "08:00",
+      "temperature": 23
+    },
+    {
+      "time": "15:00",
+      "temperature": 23
+    },
+    {
+      "time": "21:00",
+      "temperature": 23
+    }
+  ],
+  "Mon": [
+    {
+      "time": "03:00",
+      "temperature": 23
+    },
+    {
+      "time": "06:00",
+      "temperature": 23
+    },
+    {
+      "time": "15:00",
+      "temperature": 23
+    },
+    {
+      "time": "21:00",
+      "temperature": 23
+    }
+  ],
+  "Tue": [
+    {
+      "time": "03:00",
+      "temperature": 23
+    },
+    {
+      "time": "06:00",
+      "temperature": 23
+    },
+    {
+      "time": "15:00",
+      "temperature": 23
+    },
+    {
+      "time": "21:00",
+      "temperature": 23
+    }
+  ],
+  "Wed": [
+    {
+      "time": "03:00",
+      "temperature": 23
+    },
+    {
+      "time": "06:00",
+      "temperature": 23
+    },
+    {
+      "time": "15:00",
+      "temperature": 23
+    },
+    {
+      "time": "21:00",
+      "temperature": 23
+    }
+  ],
+  "Thu": [
+    {
+      "time": "03:00",
+      "temperature": 23
+    },
+    {
+      "time": "06:00",
+      "temperature": 23
+    },
+    {
+      "time": "15:00",
+      "temperature": 23
+    },
+    {
+      "time": "21:00",
+      "temperature": 23
+    }
+  ],
+  "Fri": [
+    {
+      "time": "03:00",
+      "temperature": 23
+    },
+    {
+      "time": "06:00",
+      "temperature": 23
+    },
+    {
+      "time": "15:00",
+      "temperature": 23
+    },
+    {
+      "time": "21:00",
+      "temperature": 23
+    }
+  ],
+  "Sat": [
+    {
+      "time": "05:00",
+      "temperature": 23
+    },
+    {
+      "time": "08:00",
+      "temperature": 23
+    },
+    {
+      "time": "15:00",
+      "temperature": 23
+    },
+    {
+      "time": "21:00",
+      "temperature": 23
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "Sun": [
+    {
+      "time": "08:00",
+      "temperature": 20
+    },
+    {
+      "time": "16:00",
+      "temperature": 18
+    }
+  ],
+  "Mon": [
+    {
+      "time": "05:00",
+      "temperature": 21
+    },
+    {
+      "time": "16:00",
+      "temperature": 18
+    }
+  ],
+  "Tue": [
+    {
+      "time": "05:00",
+      "temperature": 21
+    },
+    {
+      "time": "16:00",
+      "temperature": 18
+    }
+  ],
+  "Wed": [
+    {
+      "time": "05:00",
+      "temperature": 21
+    },
+    {
+      "time": "16:00",
+      "temperature": 18
+    }
+  ],
+  "Thu": [
+    {
+      "time": "05:00",
+      "temperature": 21
+    },
+    {
+      "time": "16:00",
+      "temperature": 18
+    }
+  ],
+  "Fri": [
+    {
+      "time": "05:00",
+      "temperature": 21
+    },
+    {
+      "time": "16:00",
+      "temperature": 18
+    }
+  ],
+  "Sat": [
+    {
+      "time": "08:00",
+      "temperature": 20
+    },
+    {
+      "time": "16:00",
+      "temperature": 18
+    }
+  ]
+}
