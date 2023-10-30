@@ -34,13 +34,16 @@ class HeatingControl:
 
     def receiveData(self, payload: str) -> None:
 
-        temperature = float(payload)
-        heatingTable = HeatingTable(self.timeTableFile)
-        targetTemperature = heatingTable.getTargetTemperature(datetime.now())
-        heating = not self.schmittTrigger.setValue(temperature, targetTemperature)
+        try:
+            temperature = float(payload)
+            heatingTable = HeatingTable(self.timeTableFile)
+            targetTemperature = heatingTable.getTargetTemperature(datetime.now())
+            heating = not self.schmittTrigger.setValue(temperature, targetTemperature)
 
-        self.mqttClient.publishOnChange(f'{self.roomName}/TargetTemperature', str(targetTemperature))
-        self.mqttClient.publishOnChange(f'{self.roomName}/heating', str(heating))
+            self.mqttClient.publishOnChange(f'{self.roomName}/TargetTemperature', str(targetTemperature))
+            self.mqttClient.publishOnChange(f'{self.roomName}/heating', str(heating))
+        except BaseException:
+            logger.error("Exception occurs")
 
     def __keepAlive(self) -> None:
         self.mqttClient.publishIndependentTopic('/house/agents/HeatingControl/heartbeat', DateTimeUtilities.getCurrentDateString())
