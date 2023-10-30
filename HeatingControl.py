@@ -42,8 +42,8 @@ class HeatingControl:
 
             self.mqttClient.publishOnChange(f'{self.roomName}/TargetTemperature', str(targetTemperature))
             self.mqttClient.publishOnChange(f'{self.roomName}/heating', str(heating))
-        except BaseException:
-            logger.error("Exception occurs")
+        except Exception as e:
+            logger.error("Exception occurs: " + str(e))
 
     def __keepAlive(self) -> None:
         self.mqttClient.publishIndependentTopic('/house/agents/HeatingControl/heartbeat', DateTimeUtilities.getCurrentDateString())
