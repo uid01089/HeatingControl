@@ -2,6 +2,7 @@ import logging
 import time
 from datetime import datetime
 from pathlib import PurePath
+from AtLeastOneActive import AtLeastOneActive
 from PythonLib.DateUtil import DateTimeUtilities
 
 
@@ -26,6 +27,7 @@ class HeatingControl:
         self.mqttClient = mqttClient
         self.scheduler = scheduler
         self.schmittTrigger = schmittTrigger
+        self.atLeastOneActive = AtLeastOneActive()
 
     def setup(self) -> None:
 
@@ -40,8 +42,12 @@ class HeatingControl:
             targetTemperature = heatingTable.getTargetTemperature(datetime.now())
             heating = not self.schmittTrigger.setValue(temperature, targetTemperature)
 
-            self.mqttClient.publishOnChange(f'{self.roomName}/TargetTemperature', str(targetTemperature))
-            self.mqttClient.publishOnChange(f'{self.roomName}/heating', str(heating))
+            self.mqttClient.publish(f'{self.roomName}/TargetTemperature', str(targetTemperature))
+            self.mqttClient.publish(f'{self.roomName}/heating', str(heating))
+
+            allOverPumpValue = self.atLeastOneActive.trigger(f'{self.roomName}/heating', heating)
+            self.mqttClient.publishIndependentTopic('/house/agents/HeatingControl/allOverHeating', str(allOverPumpValue))
+
         except Exception as e:
             logger.error("Exception occurs: " + str(e))
 
