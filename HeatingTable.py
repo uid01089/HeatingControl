@@ -1,8 +1,6 @@
 import re
 import logging
-from pathlib import PurePath
 from datetime import datetime
-from PythonLib.JsonUtil import JsonUtil
 
 
 logger = logging.getLogger('HeatingTable')
@@ -37,8 +35,11 @@ class TimeEntry:
 
 
 class HeatingTable:
-    def __init__(self, timeTableFile: PurePath) -> None:
-        self.timeTableFile = timeTableFile
+    def __init__(self) -> None:
+        self.config = {}
+
+    def setConfig(self, config: dict) -> None:
+        self.config = config
 
     def getTargetTemperature(self, date: datetime) -> float:
 
@@ -52,11 +53,13 @@ class HeatingTable:
         dayStringPredecessor = self.__dayOfWeekAsString(day - 1 + 7)
         dayStringSuccessor = self.__dayOfWeekAsString(day + 1)
 
-        timeTable = JsonUtil.loadJson(self.timeTableFile)
+        dayConfig = self.config.get(dayString)
+        dayConfigPredecessor = self.config.get(dayStringPredecessor)
+        dayConfigSuccessor = self.config.get(dayStringSuccessor)
 
-        dayConfig = timeTable[dayString]
-        dayConfigPredecessor = timeTable[dayStringPredecessor]
-        dayConfigSuccessor = timeTable[dayStringSuccessor]
+        if not (dayConfig and dayConfigPredecessor and dayConfigSuccessor):
+            raise ValueError("Config is corrupt")
+
         lastTimeConfigOfPredecessor = dayConfigPredecessor[-1]
         fistTimeConfigOfSuccessor = dayConfigSuccessor[0]
 
