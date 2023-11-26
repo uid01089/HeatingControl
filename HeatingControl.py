@@ -27,7 +27,7 @@ class Module:
         self.atLeastOneActive = AtLeastOneActive(self.mqttClient, '/house/agents/HeatingControl/values/allOverHeating')
 
     def getAtLeastOneActive(self) -> AtLeastOneActive:
-        return self.getAtLeastOneActive
+        return self.atLeastOneActive
 
     def getScheduler(self) -> Scheduler:
         return self.scheduler
@@ -69,7 +69,7 @@ class SpecificModule:
         return self.module.getMqttClient()
 
     def getAtLeastOneActive(self) -> AtLeastOneActive:
-        return self.module.getAtLeastOneActive
+        return self.module.getAtLeastOneActive()
 
     def setup(self) -> SpecificModule:
         self.module.getScheduler().scheduleEach(self.config.loop, 60000)
@@ -102,9 +102,9 @@ class HeatingControl:
             targetTemperature = self.heatingTable.getTargetTemperature(datetime.now())
             heating = not self.schmittTrigger.setValue(temperature, targetTemperature)
 
-            self.mqttClient.publish(f'/house/agents/HeatingControl/{self.roomName}/values/CurrentTemperature', str(temperature))
-            self.mqttClient.publish(f'/house/agents/HeatingControl/{self.roomName}/values/TargetTemperature', str(targetTemperature))
-            self.mqttClient.publish(f'/house/agents/HeatingControl/{self.roomName}/values/doHeating', heating)
+            self.mqttClient.publishIndependentTopic(f'/house/agents/HeatingControl/{self.roomName}/values/CurrentTemperature', str(temperature))
+            self.mqttClient.publishIndependentTopic(f'/house/agents/HeatingControl/{self.roomName}/values/TargetTemperature', str(targetTemperature))
+            self.mqttClient.publishIndependentTopic(f'/house/agents/HeatingControl/{self.roomName}/values/doHeating', heating)
 
             self.atLeastOneActive.trigger(f'{self.roomName}/heating', heating)
 
