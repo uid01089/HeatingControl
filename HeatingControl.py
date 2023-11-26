@@ -24,7 +24,7 @@ class Module:
     def __init__(self) -> None:
         self.scheduler = Scheduler()
         self.mqttClient = Mqtt("koserver.iot", "/house/rooms", pahoMqtt.Client("HeatingControl"))
-        self.atLeastOneActive = AtLeastOneActive(self.mqttClient, '/house/agents/HeatingControl/values/allOverHeating')
+        self.atLeastOneActive = AtLeastOneActive(self.mqttClient, '/house/agents/HeatingControl/values/allOverHeating', 'shellies/shelly1-3083988BFEF9/relay/0/command')
 
     def getAtLeastOneActive(self) -> AtLeastOneActive:
         return self.atLeastOneActive
@@ -43,12 +43,16 @@ class Module:
 
 
 class SpecificModule:
-    def __init__(self, roomName: str, module: Module) -> None:
+    def __init__(self, roomName: str, relayTopic: str, module: Module) -> None:
         self.roomName = roomName
+        self.relayTopic = relayTopic
         self.module = module
         self.config = MqttConfigContainer(module.getMqttClient(), f"/house/agents/HeatingControl/{self.roomName}/config", Path(self.roomName + ".json"), {"Sun": []})
         self.schmittTrigger = SchmittTrigger(0.5)
         self.heatingTable = HeatingTable()
+
+    def getRelayTopic(self) -> str:
+        return self.relayTopic
 
     def getHeatingTable(self) -> str:
         return self.heatingTable
@@ -86,6 +90,7 @@ class HeatingControl:
         self.schmittTrigger = module.getSchmittTrigger()
         self.heatingTable = module.getHeatingTable()
         self.atLeastOneActive = module.getAtLeastOneActive()
+        self.relayTopic = module.getRelayTopic()
 
     def setup(self) -> None:
 
@@ -100,7 +105,9 @@ class HeatingControl:
         try:
             temperature = float(payload)
             targetTemperature = self.heatingTable.getTargetTemperature(datetime.now())
+
             heating = not self.schmittTrigger.setValue(temperature, targetTemperature)
+            self.mqttClient.publishIndependentTopic(self.relayTopic, 'LOW' if heating else 'HIGH')
 
             self.mqttClient.publishIndependentTopic(f'/house/agents/HeatingControl/{self.roomName}/values/CurrentTemperature', str(temperature))
             self.mqttClient.publishIndependentTopic(f'/house/agents/HeatingControl/{self.roomName}/values/TargetTemperature', str(targetTemperature))
@@ -126,14 +133,14 @@ def main() -> None:
     module = Module()
     module.setup()
 
-    HeatingControl(SpecificModule('KonniZimmer', module).setup()).setup()
-    HeatingControl(SpecificModule('Bad', module).setup()).setup()
-    HeatingControl(SpecificModule('SamiZimmer', module).setup()).setup()
-    HeatingControl(SpecificModule('SebiZimmer', module).setup()).setup()
-    HeatingControl(SpecificModule('SilviaZimmer', module).setup()).setup()
-    HeatingControl(SpecificModule('Wohnzimmer', module).setup()).setup()
-    HeatingControl(SpecificModule('WcOben', module).setup()).setup()
-    HeatingControl(SpecificModule('WcUnten', module).setup()).setup()
+    HeatingControl(SpecificModule('KonniZimmer', '/HeizungsRelaisUnten/write/0', module).setup()).setup()
+    HeatingControl(SpecificModule('Bad', '/HeizungsRelaisOben/write/5', module).setup()).setup()
+    HeatingControl(SpecificModule('SamiZimmer', '/HeizungsRelaisOben/write/0', module).setup()).setup()
+    HeatingControl(SpecificModule('SebiZimmer', '/HeizungsRelaisOben/write/6', module).setup()).setup()
+    HeatingControl(SpecificModule('SilviaZimmer', '/HeizungsRelaisOben/write/4', module).setup()).setup()
+    HeatingControl(SpecificModule('Wohnzimmer', '/HeizungsRelaisUnten/write/1', module).setup()).setup()
+    HeatingControl(SpecificModule('WcOben', '/HeizungsRelaisOben/write/1', module).setup()).setup()
+    HeatingControl(SpecificModule('WcUnten', '/HeizungsRelaisUnten/write/2', module).setup()).setup()
 
     print("HeatingControl is running!")
 
