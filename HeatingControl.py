@@ -3,6 +3,7 @@ from __future__ import annotations
 import logging
 from pathlib import Path
 import time
+import os
 from datetime import datetime
 import paho.mqtt.client as pahoMqtt
 from PythonLib.JsonUtil import JsonUtil
@@ -18,6 +19,9 @@ from PythonLib.SchmittTrigger import SchmittTrigger
 from HeatingTable import HeatingTable
 
 logger = logging.getLogger('HeatingControl')
+
+
+DATA_PATH = Path(os.getenv('DATA_PATH', "."))
 
 
 class Module:
@@ -47,7 +51,7 @@ class SpecificModule:
         self.roomName = roomName
         self.relayTopic = relayTopic
         self.module = module
-        self.config = MqttConfigContainer(module.getMqttClient(), f"/house/agents/HeatingControl/{self.roomName}/config", Path(self.roomName + ".json"), {"Sun": []})
+        self.config = MqttConfigContainer(module.getMqttClient(), f"/house/agents/HeatingControl/{self.roomName}/config", DATA_PATH.joinpath(self.roomName + ".json"), {"Sun": []})
         self.schmittTrigger = SchmittTrigger(0.5)
         self.heatingTable = HeatingTable()
 
